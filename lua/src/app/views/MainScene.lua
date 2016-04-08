@@ -18,27 +18,65 @@ function MainScene:onCreate()
 end
 
 function MainScene:setupTestMenu()
-    local label1 = cc.Label:createWithSystemFont("Test Item 1", "sans", 28)
-    local item1 = cc.MenuItemLabel:create(label1)
-    item1:onClicked(function()
-        print("Test Item 1")
-    end)
+    self.status =
+    cc.Label:createWithSystemFont("Hello Lua", "Arial", 32)
+            :move(display.cx, 100)
+            :addTo(self)
+    self.status:setColor(cc.c3b(255, 0, 0))
+    local showText = function(msg)
+        printf(msg)
+        self.status:setString(msg)
+    end
 
-    local label2 = cc.Label:createWithSystemFont("Test Item 2", "sans", 28)
-    local item2 = cc.MenuItemLabel:create(label2)
-    item2:onClicked(function()
-        print("Test Item 2")
-    end)
+    self.kHomeBanner = "home"
+    self.kGameOverAd = "gameover"
 
-    local label3 = cc.Label:createWithSystemFont("Test Item 3", "sans", 28)
-    local item3 = cc.MenuItemLabel:create(label3)
-    item3:onClicked(function()
-        print("Test Item 3")
-    end)
+    cc.MenuItemFont:setFontName("Arial")
+    cc.Menu:create(
+                   cc.MenuItemFont:create("load banner"):onClicked(function()
+                        sdkbox.PluginAdMob:cache(self.kHomeBanner)
+                    end),
+                   cc.MenuItemFont:create("show banner"):onClicked(function()
+                        sdkbox.PluginAdMob:show(self.kHomeBanner)
+                    end),
+                   cc.MenuItemFont:create("hide banner"):onClicked(function()
+                        sdkbox.PluginAdMob:hide(self.kHomeBanner)
+                    end),
+                   cc.MenuItemFont:create("is banner available"):onClicked(function()
+                        local yes = sdkbox.PluginAdMob:isAvailable(self.kHomeBanner) and "yes" or "no"
+                        showText("is " .. self.kHomeBanner .. " available " .. yes)
+                    end),
 
-    local menu = cc.Menu:create(item1, item2, item3)
-    menu:alignItemsVerticallyWithPadding(24)
-    self:addChild(menu)
+                   cc.MenuItemFont:create("load interstitial"):onClicked(function()
+                        sdkbox.PluginAdMob:cache(self.kGameOverAd)
+                    end),
+                   cc.MenuItemFont:create("show interstitial"):onClicked(function()
+                        sdkbox.PluginAdMob:show(self.kGameOverAd)
+                    end),
+                   cc.MenuItemFont:create("is interstitial available"):onClicked(function()
+                        local yes = sdkbox.PluginAdMob:isAvailable(self.kGameOverAd) and "yes" or "no"
+                        showText("is " .. self.kGameOverAd .. " available " .. yes)
+                    end)
+                   )
+        :move(display.cx, display.cy)
+        :addTo(self)
+        :alignItemsVerticallyWithPadding(20)
+
+
+    require('cocos.cocos2d.json')
+    local plugin = sdkbox.PluginAdMob
+    plugin:setListener(function(args)
+        local event = args.event
+        dump(args, "admob listener info:")
+        showText(json.encode(args))
+    end)
+    plugin:init()
+
+    -- AdMobTestDeviceId comes from c++
+    if AdMobTestDeviceId then
+        print("the admob test device id is:", AdMobTestDeviceId)
+        plugin:setTestDevices(AdMobTestDeviceId)
+    end
 end
 
 return MainScene

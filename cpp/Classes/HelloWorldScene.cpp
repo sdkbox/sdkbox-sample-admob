@@ -1,7 +1,44 @@
 
 #include "HelloWorldScene.h"
 
+#ifdef SDKBOX_ENABLED
+#include "PluginAdMob/PluginAdMob.h"
+#endif
+
 USING_NS_CC;
+
+static std::string kHomeBanner = "home";
+static std::string kGameOverAd = "gameover";
+
+static std::function<void(const std::string &)> showText = nullptr;
+#ifdef SDKBOX_ENABLED
+
+class IMListener : public sdkbox::AdMobListener {
+public:
+    virtual void adViewDidReceiveAd(const std::string &name) {
+        if (showText) showText(StringUtils::format("%s name=%s", __FUNCTION__, name.c_str()));
+    }
+    virtual void adViewDidFailToReceiveAdWithError(const std::string &name, const std::string &msg) {
+        if (showText) showText(StringUtils::format("%s name=%s, msg=%s", __FUNCTION__, name.c_str(), msg.c_str()));
+    }
+    virtual void adViewWillPresentScreen(const std::string &name) {
+        if (showText) showText(StringUtils::format("%s name=%s", __FUNCTION__, name.c_str()));
+    }
+    virtual void adViewDidDismissScreen(const std::string &name) {
+        if (showText) showText(StringUtils::format("%s name=%s", __FUNCTION__, name.c_str()));
+    }
+    virtual void adViewWillDismissScreen(const std::string &name) {
+        if (showText) showText(StringUtils::format("%s name=%s", __FUNCTION__, name.c_str()));
+
+        if (name == "gameover") {
+            sdkbox::PluginAdMob::cache(kGameOverAd);
+        }
+    }
+    virtual void adViewWillLeaveApplication(const std::string &name) {
+        if (showText) showText(StringUtils::format("%s name=%s", __FUNCTION__, name.c_str()));
+    }
+};
+#endif
 
 Scene* HelloWorld::createScene()
 {
@@ -56,21 +93,42 @@ bool HelloWorld::init()
 
 void HelloWorld::createTestMenu()
 {
-    auto menu = Menu::create();
+    auto size = Director::getInstance()->getWinSize();
 
-    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Test Item 1", "sans", 24), [](Ref*){
-        CCLOG("Test Item 1");
-    }));
+    auto label = Label::createWithSystemFont("Hello cpp", "Arial", 32);
+    label->setPosition(size.width/2, 100);
+    label->setColor(Color3B(255, 0, 0));
+    addChild(label);
 
-    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Test Item 2", "sans", 24), [](Ref*){
-        CCLOG("Test Item 2");
-    }));
+    showText = [=](const std::string &text) {
+        CCLOG("%s", text.c_str());
+        label->setString(text);
+    };
 
-    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Test Item 3", "sans", 24), [](Ref*){
-        CCLOG("Test Item 3");
-    }));
+    MenuItemFont::setFontName("Arial");
+#ifdef SDKBOX_ENABLED
+    // ui
+    {
+        Menu* menu = Menu::create(
+                                  MenuItemFont::create("load banner", [](Ref*) { sdkbox::PluginAdMob::cache(kHomeBanner); }),
+                                  MenuItemFont::create("show banner", [](Ref*) { sdkbox::PluginAdMob::show(kHomeBanner);  }),
+                                  MenuItemFont::create("hide banner", [](Ref*) { sdkbox::PluginAdMob::hide(kHomeBanner);  }),
+                                  MenuItemFont::create("is banner available", [=](Ref*) {
+            showText(StringUtils::format("is %s available %d", kHomeBanner.c_str(), sdkbox::PluginAdMob::isAvailable(kHomeBanner)));
+        }),
 
-    menu->alignItemsVerticallyWithPadding(10);
-    addChild(menu);
+                                  MenuItemFont::create("load interstitial", [](Ref*) { sdkbox::PluginAdMob::cache(kGameOverAd); }),
+                                  MenuItemFont::create("show interstitial", [](Ref*) { sdkbox::PluginAdMob::show(kGameOverAd);  }),
+                                  MenuItemFont::create("is interstital available", [=](Ref*) {
+            showText(StringUtils::format("is %s available %d", kGameOverAd.c_str(), sdkbox::PluginAdMob::isAvailable(kGameOverAd)));
+        }),
+                                  NULL);
+        menu->alignItemsVerticallyWithPadding(20);
+        menu->setPosition(size.width/2, size.height/2);
+        addChild(menu);
+    }
+
+    sdkbox::PluginAdMob::setListener(new IMListener());
+#endif
 }
 

@@ -31,24 +31,102 @@ var HelloWorldLayer = cc.Layer.extend({
     },
 
     createTestMenu:function() {
-        var item1 = new cc.MenuItemLabel(new cc.LabelTTF("Test Item 1", "sans", 28), function() {
-            cc.log("Test Item 1");
-        });
+        var self = this;
+        var size = cc.winSize;
 
-        var item2 = new cc.MenuItemLabel(new cc.LabelTTF("Test Item 2", "sans", 28), function() {
-            cc.log("Test Item 2");
-        });
+        var coinsLabel = cc.Label.createWithSystemFont("Hello Js", "Arial", 32);
+        coinsLabel.setPosition(size.width/2, 80);
+        self.addChild(coinsLabel);
+        self.coinsLabel = coinsLabel;
 
-        var item3 = new cc.MenuItemLabel(new cc.LabelTTF("Test Item 3", "sans", 28), function() {
-            cc.log("Test Item 3");
-        });
+        cc.MenuItemFont.setFontName('arial');
+        cc.MenuItemFont.setFontSize(32);
 
-        var winsize = cc.winSize;
-        var menu = new cc.Menu(item1, item2, item3);
-        menu.x = winsize.width / 2;
-        menu.y = winsize.height / 2;
+
+        self.kHomeBanner = "home";
+        self.kGameOverAd = "gameover";
+        printf = console.log
+
+        var menu = new cc.Menu(
+            // banner
+            new cc.MenuItemFont("load banner", function () {
+                sdkbox.PluginAdMob.cache(self.kHomeBanner);
+            }, this),
+            new cc.MenuItemFont("show banner", function () {
+                sdkbox.PluginAdMob.show(self.kHomeBanner);
+            }, this),
+            new cc.MenuItemFont("hide banner", function () {
+                sdkbox.PluginAdMob.hide(self.kHomeBanner);
+            }, this),
+            new cc.MenuItemFont("is banner available", function () {
+                var yes = sdkbox.PluginAdMob.isAvailable(self.kHomeBanner);
+                self.showText("is {0} is available {1}".format(self.kHomeBanner, yes));
+            }, this),
+
+            // interstitial
+            new cc.MenuItemFont("load interstitial", function () {
+                sdkbox.PluginAdMob.cache(self.kGameOverAd);
+            }, this),
+            new cc.MenuItemFont("show interstitial", function () {
+                sdkbox.PluginAdMob.show(self.kGameOverAd);
+            }, this),
+            new cc.MenuItemFont("is interstitial available", function () {
+                var yes = sdkbox.PluginAdMob.isAvailable(self.kGameOverAd);
+                self.showText("is {0} is available {1}".format(self.kGameOverAd, yes));
+            }, this)
+            );
+        menu.setPosition(size.width/2, size.height/2);
         menu.alignItemsVerticallyWithPadding(20);
-        this.addChild(menu);
+        self.addChild(menu);
+
+        var initSDK = function() {
+            if ("undefined" == typeof(sdkbox)) {
+                console.log("sdkbox is not exist")
+                return
+            }
+
+            if ("undefined" != typeof(sdkbox.PluginAdMob)) {
+                var plugin = sdkbox.PluginAdMob
+                plugin.setListener({
+                    adViewDidReceiveAd: function(name) {
+                        self.showText('adViewDidReceiveAd name='+name);
+                    },
+                    adViewDidFailToReceiveAdWithError: function(name, msg) {
+                        self.showText('adViewDidFailToReceiveAdWithError name={0} msg={1}'.format(name, msg));
+                    },
+                    adViewWillPresentScreen: function(name) {
+                        self.showText('adViewWillPresentScreen name='+name);
+                    },
+                    adViewDidDismissScreen: function(name) {
+                        self.showText('adViewDidDismissScreen name='+name);
+                    },
+                    adViewWillDismissScreen: function(name) {
+                        self.showText('adViewWillDismissScreen='+name);
+                    },
+                    adViewWillLeaveApplication: function(name) {
+                        self.showText('adViewWillLeaveApplication='+name);
+                    }
+                });
+                plugin.init();
+
+                // just for test
+                if ("undefined" != typeof(plugin.deviceid) && plugin.deviceid.length > 0) {
+                    console.log(">>>>{0}".format(plugin.deviceid));
+                    plugin.setTestDevices(plugin.deviceid);
+                }
+
+            } else {
+                printf("no plugin init")
+            }
+        }
+
+        initSDK();
+
+        var showText = function(msg) {
+            printf(msg);
+            self.coinsLabel.setString(msg);
+        }
+        self.showText = showText;
     }
 });
 

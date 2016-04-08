@@ -11,6 +11,10 @@
 #else
 #include "js_module_register.h"
 #endif
+#ifdef SDKBOX_ENABLED
+#include "PluginAdMobJS.hpp"
+#include "PluginAdMobJSHelper.h"
+#endif
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -70,6 +74,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 #else
     js_module_register();
     ScriptingCore* sc = ScriptingCore::getInstance();
+#ifdef SDKBOX_ENABLED
+    sc->addRegisterCallback(register_all_PluginAdMobJS);
+    sc->addRegisterCallback(register_all_PluginAdMobJS_helper);
+#endif
     sc->start();
     sc->runScript("script/jsb_boot.js");
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)

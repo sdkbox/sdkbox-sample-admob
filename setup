@@ -1,0 +1,14 @@
+#!/bin/bash
+CUR_DIR=$(cd "$(dirname $0)" && pwd)
+
+cd "$CUR_DIR"
+
+if [ ! -d ../sdkbox-cocos2d-x-binary ]; then
+    cd "$CUR_DIR/.."
+    git clone --depth 1 https://github.com/sdkbox/sdkbox-cocos2d-x-binary.git
+fi
+
+echo ""
+echo "Done."
+echo ""
+

@@ -1,7 +1,7 @@
 {
     "android": {
         "AdMob": {
-            "test": true, 
+            "test": false, 
             "ads": {
                 "gameover": {
                     "type": "interstitial", 
@@ -19,7 +19,7 @@
     }, 
     "ios": {
         "AdMob": {
-            "test": true, 
+            "test": false, 
             "ads": {
                 "gameover": {
                     "type": "interstitial", 

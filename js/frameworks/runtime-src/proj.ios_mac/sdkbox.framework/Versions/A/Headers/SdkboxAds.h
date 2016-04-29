@@ -5,7 +5,6 @@
 #include <string>
 
 namespace sdkbox {
-
 }
 
 #endif

@@ -7,7 +7,7 @@
 #ifndef _CC_SDKBOX_H_
 #define _CC_SDKBOX_H_
 
-#define SDKBOX_VERSION_STR  "sdkbox V2.1.3.3"
+#define SDKBOX_VERSION_STR  "sdkbox V2.2.0.13"
 
 /**
  * Only certain compilers support __attribute__((deprecated)).
@@ -28,6 +28,9 @@
  #include <string>
 
 namespace sdkbox {
+
+	// Use to specify a json config ahead of instantiation.
+	void setInitialConfig(const char* jsonConfig);
 
     void init( const char* application_token, const char* application_key, const char* store = "all", bool debug = false);
     void setProjectType(const char* project_type);
@@ -64,7 +67,7 @@ namespace sdkbox {
         ADTYPE_UNKNOWN
     };
 
-
+    std::string AdTrackingToString (AdActionType t);
     std::string  AdActionTypeToString( AdActionType t );
     AdActionType intToAdActionType( int v );
 

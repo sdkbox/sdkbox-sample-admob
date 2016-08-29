@@ -1,14 +1,18 @@
 #include "PluginAdMobJSHelper.h"
-#include "cocos2d_specifics.hpp"
 #include "PluginAdMob/PluginAdMob.h"
 #include "SDKBoxJSHelper.h"
-
-#include "js_manual_conversions.h"
 
 extern JSObject* jsb_sdkbox_PluginAdMob_prototype;
 static JSContext* s_cx = nullptr;
 
-class AdMobCallbackJS: public cocos2d::CCObject {
+#if (COCOS2D_VERSION < 0x00030000)
+#define Ref CCObject
+#define Director CCDirector
+#define getInstance sharedDirector
+#define schedule scheduleSelector
+#endif
+
+class AdMobCallbackJS: public cocos2d::Ref {
 public:
     AdMobCallbackJS();
     void schedule();
@@ -20,16 +24,9 @@ public:
     int _paramLen;
 };
 
-class AdMobListenerJS : public sdkbox::AdMobListener {
-private:
-    JSObject* _JSDelegate;
+class AdMobListenerJS : public sdkbox::AdMobListener, public sdkbox::JSListenerBase {
 public:
-    void setJSDelegate(JSObject* delegate) {
-        _JSDelegate = delegate;
-    }
-
-    JSObject* getJSDelegate() {
-        return _JSDelegate;
+    AdMobListenerJS():sdkbox::JSListenerBase() {
     }
 
     void adViewDidReceiveAd(const std::string &name) {
@@ -140,7 +137,7 @@ _paramLen(0) {
 
 void AdMobCallbackJS::schedule() {
     retain();
-    cocos2d::CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(AdMobCallbackJS::notityJs), this, 0, false);
+    cocos2d::Director::getInstance()->getScheduler()->schedule(schedule_selector(AdMobCallbackJS::notityJs), this, 0, 0, 0.0f, false);
     autorelease();
 }
 
@@ -150,7 +147,6 @@ void AdMobCallbackJS::notityJs(float dt) {
     if (l) {
         l->invokeJS(_name.c_str(), _paramVal, _paramLen);
     }
-    cocos2d::CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
     release();
 }
 
@@ -175,11 +171,10 @@ JSBool js_PluginAdMobJS_PluginAdMob_setListener(JSContext *cx, uint32_t argc, js
         {
             ok = false;
         }
-        JSObject *tmpObj = args.get(0).toObjectOrNull();
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginAdMobJS_PluginAdMob_setIAPListener : Error processing arguments");
         AdMobListenerJS* wrapper = new AdMobListenerJS();
-        wrapper->setJSDelegate(tmpObj);
+        wrapper->setJSDelegate(args.get(0));
         sdkbox::PluginAdMob::setListener(wrapper);
 
         args.rval().setUndefined();

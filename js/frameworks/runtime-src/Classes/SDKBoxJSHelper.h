@@ -12,8 +12,36 @@ typedef JS::HandleObject one_JSObject;
 typedef JSObject* one_JSObject;
 #endif
 
+#if COCOS2D_VERSION < 0x00030000
+// wraps a function and "this" object
+class JSFunctionWrapper
+{
+public:
+    JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval);
+    ~JSFunctionWrapper();
+private:
+    JSContext *_cx;
+    JSObject *_jsthis;
+    jsval _fval;
+};
+#endif // JSFunctionWrapper
+
 namespace sdkbox
 {
+    class JSListenerBase
+    {
+    public:
+        JSListenerBase();
+        virtual ~JSListenerBase();
+
+        void setJSDelegate(JS::HandleValue func);
+        JSObject* getJSDelegate();
+
+    protected:
+        JSObject* _JSDelegate;
+        JSFunctionWrapper *_jsFuncWrapper;
+    };
+
 // Spidermonkey v186+
 #if defined(MOZJS_MAJOR_VERSION) and MOZJS_MAJOR_VERSION >= 26
     bool js_to_number(JSContext *cx, JS::HandleValue v, double *dp);
@@ -68,7 +96,7 @@ namespace sdkbox
 
     #elif defined(JS_VERSION)
         typedef JSObject            JSOBJECT;
-    
+
         typedef jsval               JSPROPERTY_VALUE;
         typedef jsval               JSPROPERTY_STRING;
         typedef jsval               JSPROPERTY_OBJECT;
@@ -76,7 +104,7 @@ namespace sdkbox
         typedef JSBool              JS_BOOL;
 
         #define JS_SET_PROPERTY(cx, jsobj, prop, pr) JS_SetProperty( cx, jsobj, prop, &pr )
-        #define JS_INIT_CONTEXT_FOR_UPDATE(cx) 
+        #define JS_INIT_CONTEXT_FOR_UPDATE(cx)
 
         typedef jsval*        JS_FUNCTION_ARGS;
         #define JS_FUNCTION_GET_ARGS(cx,argc)           JS_ARGV(cx, argv)
@@ -102,7 +130,7 @@ namespace sdkbox
         JSOBJECT* JS_NEW_OBJECT( JSContext* cs );
 
     #endif
-    
+
     JSObject* make_array( JSContext* ctx, int size );
     jsval make_property( JSContext*ctx );
 

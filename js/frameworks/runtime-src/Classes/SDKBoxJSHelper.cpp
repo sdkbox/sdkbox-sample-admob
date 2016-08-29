@@ -8,8 +8,54 @@
 #include "cocos2d_specifics.hpp"
 #endif
 
+#if COCOS2D_VERSION < 0x00030000
+JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval)
+: _cx(cx)
+, _jsthis(jsthis)
+, _fval(fval)
+{
+    JS_AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
+    JS_AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
+}
+
+JSFunctionWrapper::~JSFunctionWrapper()
+{
+    JS_RemoveValueRoot(this->_cx, &this->_fval);
+    JS_RemoveObjectRoot(this->_cx, &this->_jsthis);
+}
+#endif // JSFunctionWrapper
+
 namespace sdkbox
 {
+
+    JSListenerBase::JSListenerBase()
+    {
+        _jsFuncWrapper = NULL;
+    }
+    JSListenerBase::~JSListenerBase()
+    {
+        CC_SAFE_DELETE(_jsFuncWrapper);
+    }
+
+    void JSListenerBase::setJSDelegate(JS::HandleValue func)
+    {
+        _JSDelegate = func.toObjectOrNull();
+
+        CC_SAFE_DELETE(_jsFuncWrapper);
+
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+#if COCOS2D_VERSION < 0x00031000
+        _jsFuncWrapper = new JSFunctionWrapper(cx, _JSDelegate, jsval());
+#else
+        JS::RootedObject targetObj(cx);
+        targetObj.set(_JSDelegate);
+        _jsFuncWrapper = new JSFunctionWrapper(cx, targetObj, JS::NullHandleValue);
+#endif
+    }
+    JSObject* JSListenerBase::getJSDelegate()
+    {
+        return _JSDelegate;
+    }
 
 #if defined(MOZJS_MAJOR_VERSION)
     #if MOZJS_MAJOR_VERSION >= 33

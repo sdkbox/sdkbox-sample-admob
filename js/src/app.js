@@ -73,7 +73,12 @@ var HelloWorldLayer = cc.Layer.extend({
             new cc.MenuItemFont("is interstitial available", function () {
                 var yes = sdkbox.PluginAdMob.isAvailable(self.kGameOverAd);
                 self.showText("is {0} is available {1}".format(self.kGameOverAd, yes));
-            }, this)
+            }, this),
+            new cc.MenuItemFont("====gc===", function() {
+               cc.log("======gc start=====");
+               __jsc__.garbageCollect();
+               cc.log("======gc end=====");
+               })
             );
         menu.setPosition(size.width/2, size.height/2);
         menu.alignItemsVerticallyWithPadding(20);
@@ -90,6 +95,9 @@ var HelloWorldLayer = cc.Layer.extend({
                 plugin.setListener({
                     adViewDidReceiveAd: function(name) {
                         self.showText('adViewDidReceiveAd name='+name);
+                        if (name == self.kHomeBanner) {
+                            plugin.show(name);
+                        }
                     },
                     adViewDidFailToReceiveAdWithError: function(name, msg) {
                         self.showText('adViewDidFailToReceiveAdWithError name={0} msg={1}'.format(name, msg));

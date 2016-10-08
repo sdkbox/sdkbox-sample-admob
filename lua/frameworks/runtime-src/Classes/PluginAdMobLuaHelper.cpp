@@ -1,8 +1,6 @@
 
 #include "PluginAdMobLuaHelper.h"
 #include "PluginAdMob/PluginAdMob.h"
-#include "CCLuaEngine.h"
-#include "tolua_fix.h"
 #include "SDKBoxLuaHelper.h"
 
 class AdMobListenerLua : public sdkbox::AdMobListener {

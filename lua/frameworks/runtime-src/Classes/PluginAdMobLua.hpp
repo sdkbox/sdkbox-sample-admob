@@ -22,4 +22,6 @@ int register_all_PluginAdMobLua(lua_State* tolua_S);
 
 
 
+
+
 #endif // __PluginAdMobLua_h__

@@ -24,6 +24,11 @@ bool js_PluginAdMobJS_PluginAdMob_getCurrBannerHeight(JSContext *cx, uint32_t ar
 JSBool js_PluginAdMobJS_PluginAdMob_getCurrBannerHeight(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
+bool js_PluginAdMobJS_PluginAdMob_getCurrBannerHeightInPixel(JSContext *cx, uint32_t argc, jsval *vp);
+#elif defined(JS_VERSION)
+JSBool js_PluginAdMobJS_PluginAdMob_getCurrBannerHeightInPixel(JSContext *cx, uint32_t argc, jsval *vp);
+#endif
+#if defined(MOZJS_MAJOR_VERSION)
 bool js_PluginAdMobJS_PluginAdMob_hide(JSContext *cx, uint32_t argc, jsval *vp);
 #elif defined(JS_VERSION)
 JSBool js_PluginAdMobJS_PluginAdMob_hide(JSContext *cx, uint32_t argc, jsval *vp);
@@ -37,6 +42,11 @@ JSBool js_PluginAdMobJS_PluginAdMob_setTestDevices(JSContext *cx, uint32_t argc,
 bool js_PluginAdMobJS_PluginAdMob_show(JSContext *cx, uint32_t argc, jsval *vp);
 #elif defined(JS_VERSION)
 JSBool js_PluginAdMobJS_PluginAdMob_show(JSContext *cx, uint32_t argc, jsval *vp);
+#endif
+#if defined(MOZJS_MAJOR_VERSION)
+bool js_PluginAdMobJS_PluginAdMob_getCurrBannerWidthInPixel(JSContext *cx, uint32_t argc, jsval *vp);
+#elif defined(JS_VERSION)
+JSBool js_PluginAdMobJS_PluginAdMob_getCurrBannerWidthInPixel(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
 bool js_PluginAdMobJS_PluginAdMob_cache(JSContext *cx, uint32_t argc, jsval *vp);

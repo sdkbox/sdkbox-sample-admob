@@ -1,6 +1,5 @@
 #include "PluginAdMobLua.hpp"
 #include "PluginAdMob/PluginAdMob.h"
-#include "tolua_fix.h"
 #include "SDKBoxLuaHelper.h"
 #include "sdkbox/Sdkbox.h"
 
@@ -37,6 +36,40 @@ int lua_PluginAdMobLua_PluginAdMob_getCurrBannerHeight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_PluginAdMobLua_PluginAdMob_getCurrBannerHeight'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_PluginAdMobLua_PluginAdMob_getCurrBannerHeightInPixel(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginAdMob",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginAdMobLua_PluginAdMob_getCurrBannerHeightInPixel'", nullptr);
+            return 0;
+        }
+        int ret = sdkbox::PluginAdMob::getCurrBannerHeightInPixel();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginAdMob:getCurrBannerHeightInPixel",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginAdMobLua_PluginAdMob_getCurrBannerHeightInPixel'.",&tolua_err);
 #endif
     return 0;
 }
@@ -145,6 +178,40 @@ int lua_PluginAdMobLua_PluginAdMob_show(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_PluginAdMobLua_PluginAdMob_show'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_PluginAdMobLua_PluginAdMob_getCurrBannerWidthInPixel(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"sdkbox.PluginAdMob",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_PluginAdMobLua_PluginAdMob_getCurrBannerWidthInPixel'", nullptr);
+            return 0;
+        }
+        int ret = sdkbox::PluginAdMob::getCurrBannerWidthInPixel();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "sdkbox.PluginAdMob:getCurrBannerWidthInPixel",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_PluginAdMobLua_PluginAdMob_getCurrBannerWidthInPixel'.",&tolua_err);
 #endif
     return 0;
 }
@@ -335,9 +402,11 @@ int lua_register_PluginAdMobLua_PluginAdMob(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"PluginAdMob");
         tolua_function(tolua_S,"getCurrBannerHeight", lua_PluginAdMobLua_PluginAdMob_getCurrBannerHeight);
+        tolua_function(tolua_S,"getCurrBannerHeightInPixel", lua_PluginAdMobLua_PluginAdMob_getCurrBannerHeightInPixel);
         tolua_function(tolua_S,"hide", lua_PluginAdMobLua_PluginAdMob_hide);
         tolua_function(tolua_S,"setTestDevices", lua_PluginAdMobLua_PluginAdMob_setTestDevices);
         tolua_function(tolua_S,"show", lua_PluginAdMobLua_PluginAdMob_show);
+        tolua_function(tolua_S,"getCurrBannerWidthInPixel", lua_PluginAdMobLua_PluginAdMob_getCurrBannerWidthInPixel);
         tolua_function(tolua_S,"cache", lua_PluginAdMobLua_PluginAdMob_cache);
         tolua_function(tolua_S,"getCurrBannerWidth", lua_PluginAdMobLua_PluginAdMob_getCurrBannerWidth);
         tolua_function(tolua_S,"init", lua_PluginAdMobLua_PluginAdMob_init);

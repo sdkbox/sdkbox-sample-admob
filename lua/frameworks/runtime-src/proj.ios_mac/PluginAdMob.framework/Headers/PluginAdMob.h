@@ -86,6 +86,20 @@ namespace sdkbox {
          * @return: -1 means current banner is not available
          */
         static int getCurrBannerHeight();
+
+        /**
+         * get width of current banner in pixel
+         *
+         * @return -1 means current banner is not available
+         */
+        static int getCurrBannerWidthInPixel();
+
+        /**
+         * get height of current banner in pixel
+         *
+         * @return: -1 means current banner is not available
+         */
+        static int getCurrBannerHeightInPixel();
     };
     
     class AdMobListener {

@@ -1,12 +1,11 @@
 
 #include "SDKBoxLuaHelper.h"
-#include "tolua_fix.h"
 #include "sdkbox/Sdkbox.h"
 
 #include <limits>
 
 #if COCOS2D_VERSION >= 0x00030000
-#include "LuaBasicConversions.h"
+
 #else
 
 std::map<std::string, std::string>  g_luaType;

@@ -2,10 +2,22 @@
 #define __SDKBOX_LUA_HELPER_H__
 
 #include "cocos2d.h"
-#include "CCLuaValue.h"
+
+#if COCOS2D_VERSION >= 0x00031100
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#else
+#include "CCLuaEngine.h"
+#include "tolua_fix.h"
+#endif
 
 #if COCOS2D_VERSION >= 0x00030000
+
+#if COCOS2D_VERSION >= 0x00031100
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
+#else
 #include "LuaBasicConversions.h"
+#endif
 
 #define LUAENGINE cocos2d::LuaEngine::getInstance()
 

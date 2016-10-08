@@ -4,7 +4,26 @@
 #include <vector>
 #include <string>
 
+#include "cocos2d.h"
+#if (COCOS2D_VERSION >= 0x00031100)
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#else
 #include "js_manual_conversions.h"
+#include "cocos2d_specifics.hpp"
+#include "ScriptingCore.h"
+#endif
+
+#ifndef SDKBOX_COCOS_JSB_VERSION
+    #if defined(SDKBOX_COCOS_CREATOR)
+        #define SDKBOX_COCOS_JSB_VERSION 2
+    #elif COCOS2D_VERSION >= 0x00031000
+        #define SDKBOX_COCOS_JSB_VERSION 2
+    #else
+        #define SDKBOX_COCOS_JSB_VERSION 1
+    #endif
+#endif
 
 #if MOZJS_MAJOR_VERSION >= 31
 typedef JS::HandleObject one_JSObject;

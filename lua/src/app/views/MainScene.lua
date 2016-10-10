@@ -69,6 +69,9 @@ function MainScene:setupTestMenu()
         local event = args.event
         dump(args, "admob listener info:")
         showText(json.encode(args))
+        if event == "adViewDidReceiveAd" and args.name == self.kHomeBanner then
+           plugin:show(self.kHomeBanner)
+       end
     end)
     plugin:init()
 

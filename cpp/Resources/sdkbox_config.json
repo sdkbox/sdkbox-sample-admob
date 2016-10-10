@@ -1,35 +1,35 @@
 {
     "android": {
         "AdMob": {
-            "test": false, 
+            "test": false,
             "ads": {
                 "gameover": {
-                    "type": "interstitial", 
-                    "id": "ca-app-pub-2862334165739756/7580064027"
-                }, 
+                    "type": "interstitial",
+                    "id": "ca-app-pub-1329374026572143/1092476511"
+                },
                 "home": {
-                    "width": 300, 
-                    "type": "banner", 
-                    "id": "ca-app-pub-2862334165739756/4626597620",
-                    "alignment": "bottom", 
+                    "width": 300,
+                    "type": "banner",
+                    "id": "ca-app-pub-1329374026572143/2685130917",
+                    "alignment": "bottom",
                     "height": 50
                 }
             }
         }
-    }, 
+    },
     "ios": {
         "AdMob": {
-            "test": false, 
+            "test": false,
             "ads": {
                 "gameover": {
-                    "type": "interstitial", 
-                    "id": "ca-app-pub-2862334165739756/9196398026"
-                }, 
+                    "type": "interstitial",
+                    "id": "ca-app-pub-1329374026572143/4185543717"
+                },
                 "home": {
-                    "width": 300, 
-                    "type": "banner", 
-                    "id": "ca-app-pub-2862334165739756/1673131226",
-                    "alignment": "bottom", 
+                    "width": 300,
+                    "type": "banner",
+                    "id": "ca-app-pub-1329374026572143/3847466511",
+                    "alignment": "bottom",
                     "height": 50
                 }
             }

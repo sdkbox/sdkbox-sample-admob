@@ -17,6 +17,7 @@ class IMListener : public sdkbox::AdMobListener {
 public:
     virtual void adViewDidReceiveAd(const std::string &name) {
         if (showText) showText(StringUtils::format("%s name=%s", __FUNCTION__, name.c_str()));
+        if (name == kHomeBanner) sdkbox::PluginAdMob::show(name);
     }
     virtual void adViewDidFailToReceiveAdWithError(const std::string &name, const std::string &msg) {
         if (showText) showText(StringUtils::format("%s name=%s, msg=%s", __FUNCTION__, name.c_str(), msg.c_str()));

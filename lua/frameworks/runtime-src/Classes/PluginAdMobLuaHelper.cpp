@@ -90,6 +90,18 @@ public:
         stack->pushLuaValueDict(dict);
         stack->executeFunctionByHandler(mLuaHandler, 1);
     }
+    void reward(const std::string &name, const std::string &currency, double amount) {
+        LuaStack* stack = LUAENGINE->getLuaStack();
+        LuaValueDict dict;
+        
+        dict.insert(std::make_pair("event", LuaValue::stringValue(__FUNCTION__)));
+        dict.insert(std::make_pair("name", LuaValue::stringValue(name)));
+        dict.insert(std::make_pair("currency", LuaValue::stringValue(currency)));
+        dict.insert(std::make_pair("amount", LuaValue::floatValue(amount)));
+        
+        stack->pushLuaValueDict(dict);
+        stack->executeFunctionByHandler(mLuaHandler, 1);
+    }
 
 private:
     int mLuaHandler;

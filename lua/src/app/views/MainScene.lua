@@ -31,6 +31,7 @@ function MainScene:setupTestMenu()
     self.kHomeBanner = "home"
     self.kGameOverAd = "gameover"
     self.kRewardVideoAd = "rewarded"
+    self.totalAmount = 0
 
     cc.MenuItemFont:setFontName("Arial")
     cc.Menu:create(
@@ -80,6 +81,9 @@ function MainScene:setupTestMenu()
            plugin:show(self.kHomeBanner)
         elseif event == "adViewDidDismissScreen" then
             plugin:cache(args.name)
+        elseif event == "reward" then
+            self.totalAmount = self.totalAmount + args.amount
+            showText("Total amount=" .. self.totalAmount)
        end
     end)
     plugin:init()

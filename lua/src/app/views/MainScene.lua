@@ -30,6 +30,7 @@ function MainScene:setupTestMenu()
 
     self.kHomeBanner = "home"
     self.kGameOverAd = "gameover"
+    self.kRewardVideoAd = "rewarded"
 
     cc.MenuItemFont:setFontName("Arial")
     cc.Menu:create(
@@ -56,7 +57,13 @@ function MainScene:setupTestMenu()
                    cc.MenuItemFont:create("is interstitial available"):onClicked(function()
                         local yes = sdkbox.PluginAdMob:isAvailable(self.kGameOverAd) and "yes" or "no"
                         showText("is " .. self.kGameOverAd .. " available " .. yes)
-                    end)
+                    end),
+                   cc.MenuItemFont:create("load rewarded video"):onClicked(function (  )
+                       sdkbox.PluginAdMob:cache(self.kRewardVideoAd)
+                   end),
+                   cc.MenuItemFont:create("show rewarded video"):onClicked(function (  )
+                       sdkbox.PluginAdMob:show(self.kRewardVideoAd)
+                   end)
                    )
         :move(display.cx, display.cy)
         :addTo(self)
@@ -71,6 +78,8 @@ function MainScene:setupTestMenu()
         showText(json.encode(args))
         if event == "adViewDidReceiveAd" and args.name == self.kHomeBanner then
            plugin:show(self.kHomeBanner)
+        elseif event == "adViewDidDismissScreen" then
+            plugin:cache(args.name)
        end
     end)
     plugin:init()

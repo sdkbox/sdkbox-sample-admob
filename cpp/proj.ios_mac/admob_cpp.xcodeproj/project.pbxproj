@@ -51,6 +51,7 @@
 		9BF047169C839D86BB3FFB00 /* MobileCoreServices.framework */ = {isa = PBXBuildFile; fileRef = E4C149468E4C496F8F14DE15 /* MobileCoreServices.framework */; };
 		A6C64045BEDDD34980A6BB2A /* MessageUI.framework */ = {isa = PBXBuildFile; fileRef = D7AF4D04BAE820A36B728505 /* MessageUI.framework */; };
 		B1284C5DBDA3945F939C265B /* CoreVideo.framework */ = {isa = PBXBuildFile; fileRef = 09074DA1B16E6C55A75AEE98 /* CoreVideo.framework */; };
+		B12B46B48B25C82D146E54EF /* CFNetwork.framework */ = {isa = PBXBuildFile; fileRef = 45B141AA895D8384B30CEE30 /* CFNetwork.framework */; };
 		B4464347889853DCF31648A6 /* GoogleMobileAds.framework */ = {isa = PBXBuildFile; fileRef = BA964F1C8EA786421A3B7298 /* GoogleMobileAds.framework */; };
 		B6DF4838B4C036F173096B57 /* GameController.framework */ = {isa = PBXBuildFile; fileRef = 83594683909072CAC87924A9 /* GameController.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -76,6 +77,7 @@
 		2026452B874D30A41B42F686 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2F9344CCBE409454944EEF8F /* PluginAdMob.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginAdMob.framework; path = PluginAdMob.framework; sourceTree = SOURCE_ROOT; };
+		45B141AA895D8384B30CEE30 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				8CCB4D35B975E3C762F4A3EA /* CoreBluetooth.framework */,
 				C851484CB069F990998EB48D /* SafariServices.framework */,
 				9BF047169C839D86BB3FFB00 /* MobileCoreServices.framework */,
+				B12B46B48B25C82D146E54EF /* CFNetwork.framework */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +259,7 @@
 				95B142D08C0FAA4270568064 /* CoreBluetooth.framework */,
 				4C1149A4BE9B760567F44EE1 /* SafariServices.framework */,
 				E4C149468E4C496F8F14DE15 /* MobileCoreServices.framework */,
+				45B141AA895D8384B30CEE30 /* CFNetwork.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

@@ -13,6 +13,10 @@
                     "id": "ca-app-pub-1329374026572143/2685130917",
                     "alignment": "bottom",
                     "height": 50
+                },
+                "rewarded":{
+                    "id":"ca-app-pub-1329374026572143/8251968111",
+                    "type":"rewarded_video"
                 }
             }
         }
@@ -31,6 +35,10 @@
                     "id": "ca-app-pub-1329374026572143/3847466511",
                     "alignment": "bottom",
                     "height": 50
+                },
+                "rewarded":{
+                    "id":"ca-app-pub-1329374026572143/7991602916",
+                    "type":"rewarded_video"
                 }
             }
         }

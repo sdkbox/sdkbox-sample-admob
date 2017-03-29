@@ -9,6 +9,9 @@ USING_NS_CC;
 
 static std::string kHomeBanner = "home";
 static std::string kGameOverAd = "gameover";
+static std::string kRewardedAd = "rewarded";
+
+int totalCoins = 0;
 
 static std::function<void(const std::string &)> showText = nullptr;
 #ifdef SDKBOX_ENABLED
@@ -33,10 +36,19 @@ public:
 
         if (name == "gameover") {
             sdkbox::PluginAdMob::cache(kGameOverAd);
+        } else if (name == kRewardedAd) {
+            sdkbox::PluginAdMob::cache(kRewardedAd);
         }
     }
     virtual void adViewWillLeaveApplication(const std::string &name) {
         if (showText) showText(StringUtils::format("%s name=%s", __FUNCTION__, name.c_str()));
+    }
+    virtual void reward(const std::string &name, const std::string &currency, double amount) {
+        if (showText) {
+            totalCoins += amount;
+            showText(StringUtils::format("%s name=%s currency=%s amount=%lf total=%d",
+                                         __FUNCTION__, name.c_str(), currency.c_str(), amount, totalCoins));
+        }
     }
 };
 #endif
@@ -122,6 +134,12 @@ void HelloWorld::createTestMenu()
                                   MenuItemFont::create("show interstitial", [](Ref*) { sdkbox::PluginAdMob::show(kGameOverAd);  }),
                                   MenuItemFont::create("is interstital available", [=](Ref*) {
             showText(StringUtils::format("is %s available %d", kGameOverAd.c_str(), sdkbox::PluginAdMob::isAvailable(kGameOverAd)));
+        }),
+                                  MenuItemFont::create("load rewarded video", [](Ref*) {
+            sdkbox::PluginAdMob::cache(kRewardedAd);
+        }),
+                                  MenuItemFont::create("show rewarded video", [](Ref*) {
+            sdkbox::PluginAdMob::show(kRewardedAd);
         }),
                                   NULL);
         menu->alignItemsVerticallyWithPadding(20);

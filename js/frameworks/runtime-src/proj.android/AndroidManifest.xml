@@ -12,6 +12,18 @@
         </activity>
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
         <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:name="com.google.android.gms.ads.AdActivity" android:theme="@android:style/Theme.Translucent" />
+
+        <!-- adcolony -->
+        <activity android:name="com.jirbo.adcolony.AdColonyFullscreen"
+          android:configChanges="keyboardHidden|orientation|screenSize"
+          android:hardwareAccelerated="true"/>
+        <!-- chartboost -->
+        <activity
+          android:name="com.chartboost.sdk.CBImpressionActivity"
+          android:configChanges="keyboardHidden|orientation|screenSize"
+          android:excludeFromRecents="true"
+          android:hardwareAccelerated="true"
+          android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
     </application>
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true" android:xlargeScreens="true" />
     <uses-permission android:name="android.permission.INTERNET" />

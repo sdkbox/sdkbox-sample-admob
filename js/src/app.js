@@ -45,6 +45,8 @@ var HelloWorldLayer = cc.Layer.extend({
 
         self.kHomeBanner = "home";
         self.kGameOverAd = "gameover";
+        self.kRewardedAd = "rewarded";
+        self.totalAmount = 0;
         printf = console.log
 
         var menu = new cc.Menu(
@@ -74,6 +76,16 @@ var HelloWorldLayer = cc.Layer.extend({
                 var yes = sdkbox.PluginAdMob.isAvailable(self.kGameOverAd);
                 self.showText("is {0} is available {1}".format(self.kGameOverAd, yes));
             }, this),
+
+            // rewarded video
+            new cc.MenuItemFont("load rewarded video", function () {
+                sdkbox.PluginAdMob.cache(self.kRewardedAd);
+            }, this),
+            new cc.MenuItemFont("show rewarded video", function () {
+                sdkbox.PluginAdMob.show(self.kRewardedAd);
+            }, this),
+
+            // gc test
             new cc.MenuItemFont("====gc===", function() {
                cc.log("======gc start=====");
                __jsc__.garbageCollect();
@@ -100,19 +112,25 @@ var HelloWorldLayer = cc.Layer.extend({
                         }
                     },
                     adViewDidFailToReceiveAdWithError: function(name, msg) {
-                        self.showText('adViewDidFailToReceiveAdWithError name={0} msg={1}'.format(name, msg));
+                        self.showText('adViewDidFailToReceiveAdWithError name='+name+' msg='+msg);
                     },
                     adViewWillPresentScreen: function(name) {
                         self.showText('adViewWillPresentScreen name='+name);
                     },
                     adViewDidDismissScreen: function(name) {
                         self.showText('adViewDidDismissScreen name='+name);
+                        plugin.cache(name);
                     },
                     adViewWillDismissScreen: function(name) {
                         self.showText('adViewWillDismissScreen='+name);
                     },
                     adViewWillLeaveApplication: function(name) {
                         self.showText('adViewWillLeaveApplication='+name);
+                    },
+                    reward: function(name, currency, amount) {
+                        self.totalAmount = self.totalAmount + amount;
+                        self.showText('reward='+name+' '+currency+' '+amount);
+                        self.showText('totalAmount='+self.totalAmount);
                     }
                 });
                 plugin.init();

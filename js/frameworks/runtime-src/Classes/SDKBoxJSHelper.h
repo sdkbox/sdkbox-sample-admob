@@ -1,3 +1,6 @@
+#ifndef __SDKBOX_JS_HELPER_H__
+#define __SDKBOX_JS_HELPER_H__
+
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include <map>
@@ -166,3 +169,5 @@ namespace sdkbox
 ////////////////////////////////////////////////////////////////////////////////
 ///                      SPIDER MONKEY UTILITIES  - END                      ///
 ////////////////////////////////////////////////////////////////////////////////
+
+#endif //__SDKBOX_JS_HELPER_H__

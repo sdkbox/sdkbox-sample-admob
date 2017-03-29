@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		03CD41C18430737519CD1542 /* StoreKit.framework */ = {isa = PBXBuildFile; fileRef = 556144B093693A0DF6716EE3 /* StoreKit.framework */; };
 		072844CCA0FA39E16D6B3DEA /* CoreBluetooth.framework */ = {isa = PBXBuildFile; fileRef = 5E8E4356BEDC1B1C3AA27A9D /* CoreBluetooth.framework */; };
+		09B3450D807D7BB79AD6EE3B /* CFNetwork.framework */ = {isa = PBXBuildFile; fileRef = F426431292E469275F6799B4 /* CFNetwork.framework */; };
 		0A4F4CADB433304E19330723 /* GoogleMobileAds.framework */ = {isa = PBXBuildFile; fileRef = 0FB34FE79F63F0A3804EA218 /* GoogleMobileAds.framework */; };
 		0C4541E1AF1465567A989916 /* sdkbox.framework */ = {isa = PBXBuildFile; fileRef = 90664B16ACE418A635A5B9C5 /* sdkbox.framework */; };
 		1A82F5FB169AC92500C4B13A /* libsqlite3.dylib */ = {isa = PBXBuildFile; fileRef = 1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */; };
@@ -159,6 +160,7 @@
 		E5934E809998BEB5540BF0ED /* PluginAdMob.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginAdMob.framework; path = PluginAdMob.framework; sourceTree = SOURCE_ROOT; };
 		ED545A8F1B68A25E00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.dylib; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		ED545A911B68A26600C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.dylib; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		F426431292E469275F6799B4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		F8A3494AA98172C8E2639DA8 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
 		FEDE48689601C283320219B0 /* SDKBoxJSHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SDKBoxJSHelper.h; path = ../Classes/SDKBoxJSHelper.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -202,6 +204,7 @@
 				072844CCA0FA39E16D6B3DEA /* CoreBluetooth.framework */,
 				A4A94355AE86799A94C0BB5B /* SafariServices.framework */,
 				83224A44BF3A10D22A9B81BB /* MobileCoreServices.framework */,
+				09B3450D807D7BB79AD6EE3B /* CFNetwork.framework */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +317,7 @@
 				5E8E4356BEDC1B1C3AA27A9D /* CoreBluetooth.framework */,
 				7BCF43888FB04B48EA5ADEB4 /* SafariServices.framework */,
 				4DAA4C649A04B09394E39F3E /* MobileCoreServices.framework */,
+				F426431292E469275F6799B4 /* CFNetwork.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

@@ -110,6 +110,7 @@ namespace sdkbox {
         virtual void adViewDidDismissScreen(const std::string &name) {}
         virtual void adViewWillDismissScreen(const std::string &name) {}
         virtual void adViewWillLeaveApplication(const std::string &name) {}
+        virtual void reward(const std::string &name, const std::string &currency, double amount) {}
     };
 }
 

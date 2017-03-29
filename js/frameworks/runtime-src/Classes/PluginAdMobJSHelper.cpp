@@ -20,7 +20,7 @@ public:
 
     std::string _name;
 
-    jsval _paramVal[2];
+    jsval _paramVal[3];
     int _paramLen;
 };
 
@@ -76,6 +76,17 @@ public:
         cb->_name = "adViewWillLeaveApplication";
         cb->_paramVal[0] = std_string_to_jsval(cx, name);
         cb->_paramLen = 1;
+        cb->schedule();
+    }
+    void reward(const std::string &name, const std::string &currency, double amount) {
+        JSContext* cx = s_cx;
+        AdMobCallbackJS* cb = new AdMobCallbackJS();
+        cb->_name = "reward";
+        cb->_paramVal[0] = std_string_to_jsval(cx, name);
+        cb->_paramVal[1] = std_string_to_jsval(cx, currency);
+        cb->_paramVal[2] = DOUBLE_TO_JSVAL(amount);
+        
+        cb->_paramLen = 3;
         cb->schedule();
     }
 

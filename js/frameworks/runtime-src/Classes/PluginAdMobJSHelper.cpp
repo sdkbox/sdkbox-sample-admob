@@ -20,7 +20,7 @@ public:
 
     std::string _name;
 
-    jsval _paramVal[3];
+    JS::Value _paramVal[3];
     int _paramLen;
 };
 
@@ -33,7 +33,7 @@ public:
         JSContext* cx = s_cx;
         AdMobCallbackJS* cb = new AdMobCallbackJS();
         cb->_name = "adViewDidReceiveAd";
-        cb->_paramVal[0] = std_string_to_jsval(cx, name);
+        cb->_paramVal[0] = SB_STR_TO_JSVAL(cx, name);
         cb->_paramLen = 1;
         cb->schedule();
     }
@@ -41,8 +41,8 @@ public:
         JSContext* cx = s_cx;
         AdMobCallbackJS* cb = new AdMobCallbackJS();
         cb->_name = "adViewDidFailToReceiveAdWithError";
-        cb->_paramVal[0] = std_string_to_jsval(cx, name);
-        cb->_paramVal[1] = std_string_to_jsval(cx, msg);
+        cb->_paramVal[0] = SB_STR_TO_JSVAL(cx, name);
+        cb->_paramVal[1] = SB_STR_TO_JSVAL(cx, msg);
         cb->_paramLen = 2;
         cb->schedule();
     }
@@ -50,7 +50,7 @@ public:
         JSContext* cx = s_cx;
         AdMobCallbackJS* cb = new AdMobCallbackJS();
         cb->_name = "adViewWillPresentScreen";
-        cb->_paramVal[0] = std_string_to_jsval(cx, name);
+        cb->_paramVal[0] = SB_STR_TO_JSVAL(cx, name);
         cb->_paramLen = 1;
         cb->schedule();
     }
@@ -58,7 +58,7 @@ public:
         JSContext* cx = s_cx;
         AdMobCallbackJS* cb = new AdMobCallbackJS();
         cb->_name = "adViewDidDismissScreen";
-        cb->_paramVal[0] = std_string_to_jsval(cx, name);
+        cb->_paramVal[0] = SB_STR_TO_JSVAL(cx, name);
         cb->_paramLen = 1;
         cb->schedule();
     }
@@ -66,7 +66,7 @@ public:
         JSContext* cx = s_cx;
         AdMobCallbackJS* cb = new AdMobCallbackJS();
         cb->_name = "adViewWillDismissScreen";
-        cb->_paramVal[0] = std_string_to_jsval(cx, name);
+        cb->_paramVal[0] = SB_STR_TO_JSVAL(cx, name);
         cb->_paramLen = 1;
         cb->schedule();
     }
@@ -74,7 +74,7 @@ public:
         JSContext* cx = s_cx;
         AdMobCallbackJS* cb = new AdMobCallbackJS();
         cb->_name = "adViewWillLeaveApplication";
-        cb->_paramVal[0] = std_string_to_jsval(cx, name);
+        cb->_paramVal[0] = SB_STR_TO_JSVAL(cx, name);
         cb->_paramLen = 1;
         cb->schedule();
     }
@@ -82,15 +82,15 @@ public:
         JSContext* cx = s_cx;
         AdMobCallbackJS* cb = new AdMobCallbackJS();
         cb->_name = "reward";
-        cb->_paramVal[0] = std_string_to_jsval(cx, name);
-        cb->_paramVal[1] = std_string_to_jsval(cx, currency);
-        cb->_paramVal[2] = DOUBLE_TO_JSVAL(amount);
-        
+        cb->_paramVal[0] = SB_STR_TO_JSVAL(cx, name);
+        cb->_paramVal[1] = SB_STR_TO_JSVAL(cx, currency);
+        cb->_paramVal[2] = JS::DoubleValue(amount);
+
         cb->_paramLen = 3;
         cb->schedule();
     }
 
-    void invokeJS(const char* func, jsval* pVals, int valueSize) {
+    void invokeJS(const char* func, JS::Value* pVals, int valueSize) {
         if (!s_cx) {
             return;
         }
@@ -119,7 +119,7 @@ public:
             if(!JS_GetProperty(cx, obj, func_name, &func_handle)) {
                 return;
             }
-            if(func_handle == JSVAL_VOID) {
+            if(func_handle == JS::NullValue()) {
                 return;
             }
 
@@ -164,7 +164,7 @@ void AdMobCallbackJS::notityJs(float dt) {
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
-bool js_PluginAdMobJS_PluginAdMob_setListener(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdMobJS_PluginAdMob_setListener(JSContext *cx, uint32_t argc, JS::Value *vp)
 #else
 bool js_PluginAdMobJS_PluginAdMob_setListener(JSContext *cx, uint32_t argc, jsval *vp)
 #endif
@@ -185,13 +185,13 @@ JSBool js_PluginAdMobJS_PluginAdMob_setListener(JSContext *cx, uint32_t argc, js
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginAdMobJS_PluginAdMob_setIAPListener : Error processing arguments");
         AdMobListenerJS* wrapper = new AdMobListenerJS();
-        wrapper->setJSDelegate(args.get(0));
+        wrapper->setJSDelegate(cx, args.get(0));
         sdkbox::PluginAdMob::setListener(wrapper);
 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdMobJS_PluginAdMob_setIAPListener : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdMobJS_PluginAdMob_setIAPListener : wrong number of arguments");
     return false;
 }
 
@@ -202,7 +202,8 @@ void admob_set_constants(JSContext* cx, const JS::RootedObject& obj, const std::
 void admob_set_constants(JSContext* cx, JSObject* obj, const std::string& name, const std::map<std::string, int>& params)
 #endif
 {
-    jsval val = sdkbox::std_map_string_int_to_jsval(cx, params);
+    JS::RootedValue val(cx);
+    sdkbox::std_map_string_int_to_jsval(cx, params, &val);
 
     JS::RootedValue rv(cx);
     rv = val;

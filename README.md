@@ -39,3 +39,7 @@ Memo:
 | +-- lua
 | \-- js
 ~~~
+
+# reward video
+
+If you can not get reward video, please try to set `target=android-24` in `project.properties` file.

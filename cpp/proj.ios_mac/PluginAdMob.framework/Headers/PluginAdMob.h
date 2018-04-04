@@ -78,28 +78,28 @@ namespace sdkbox {
          *
          * @return: -1 means current banner is not available
          */
-        static int getCurrBannerWidth();
+        static int getCurrBannerWidth(const std::string &name = "");
 
         /**
          * get height of current banner
          *
          * @return: -1 means current banner is not available
          */
-        static int getCurrBannerHeight();
+        static int getCurrBannerHeight(const std::string &name = "");
 
         /**
          * get width of current banner in pixel
          *
          * @return -1 means current banner is not available
          */
-        static int getCurrBannerWidthInPixel();
+        static int getCurrBannerWidthInPixel(const std::string &name = "");
 
         /**
          * get height of current banner in pixel
          *
          * @return: -1 means current banner is not available
          */
-        static int getCurrBannerHeightInPixel();
+        static int getCurrBannerHeightInPixel(const std::string &name = "");
     };
     
     class AdMobListener {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
     <!-- Brand name for Google [DO NOT TRANSLATE] -->
     <string name="auth_google_play_services_client_google_display_name">Google</string>
     <!-- Brand name for Facebook [DO NOT TRANSLATE] -->

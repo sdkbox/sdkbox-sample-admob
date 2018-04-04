@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2014 Google Inc. All Rights Reserved. -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation" >
 
     <!-- Text on a placeholder buy button when Google Play services is not
          available or up-to-date -->

@@ -13,6 +13,7 @@
 #import <GoogleMobileAds/GADMediaView.h>
 #import <GoogleMobileAds/GADNativeAd.h>
 #import <GoogleMobileAds/GADNativeAdImage.h>
+#import <GoogleMobileAds/GADNativeContentAdAssetIDs.h>
 #import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
@@ -22,7 +23,7 @@ GAD_ASSUME_NONNULL_BEGIN
 
 /// Native content ad. To request this ad type, you need to pass kGADAdLoaderAdTypeNativeContent
 /// (see GADAdLoaderAdTypes.h) to the |adTypes| parameter in GADAdLoader's initializer method. If
-/// you request this ad type, your delegate must conform to the GADNativeContentAdRequestDelegate
+/// you request this ad type, your delegate must conform to the GADNativeContentAdLoaderDelegate
 /// protocol.
 @interface GADNativeContentAd : GADNativeAd
 
@@ -45,6 +46,27 @@ GAD_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly, copy, GAD_NULLABLE) NSString *advertiser;
 /// Video controller for controlling video playback in GADNativeContentAdView's mediaView.
 @property(nonatomic, strong, readonly) GADVideoController *videoController;
+
+/// Registers ad view and asset views created with this native ad.
+/// @param assetViews Dictionary of asset views keyed by asset IDs.
+- (void)registerAdView:(UIView *)adView
+            assetViews:(NSDictionary<GADNativeContentAdAssetID, UIView *> *)assetViews
+    GAD_DEPRECATED_MSG_ATTRIBUTE("Use -registerAdView:clickableAssetViews:nonclickableAssetViews:");
+
+/// Registers ad view, clickable asset views, and nonclickable asset views with this native ad.
+/// Media view shouldn't be registered as clickable.
+/// @param clickableAssetViews Dictionary of asset views that are clickable, keyed by asset IDs.
+/// @param nonclickableAssetViews Dictionary of asset views that are not clickable, keyed by asset
+///        IDs.
+- (void)registerAdView:(UIView *)adView
+       clickableAssetViews:(NSDictionary<GADNativeContentAdAssetID, UIView *> *)clickableAssetViews
+    nonclickableAssetViews:
+        (NSDictionary<GADNativeContentAdAssetID, UIView *> *)nonclickableAssetViews;
+
+/// Unregisters ad view from this native ad. The corresponding asset views will also be
+/// unregistered.
+- (void)unregisterAdView;
+
 @end
 
 #pragma mark - Protocol and constants

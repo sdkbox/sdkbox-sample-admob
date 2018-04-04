@@ -1,5 +1,4 @@
-LOCAL_PATH := $(call \
-my-dir)
+LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
@@ -20,7 +19,8 @@ LOCAL_LDLIBS := -landroid \
 -llog
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 LOCAL_WHOLE_STATIC_LIBRARIES := PluginAdMob \
-sdkbox
+sdkbox \
+PluginSdkboxAds
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END
@@ -37,6 +37,7 @@ $(call import-add-path,$(LOCAL_PATH))
 $(call import-module,./prebuilt-mk)
 $(call import-module, ./sdkbox)
 $(call import-module, ./pluginadmob)
+$(call import-module, ./pluginsdkboxads)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END

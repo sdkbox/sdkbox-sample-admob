@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import <GoogleMobileAds/GADNativeAd.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
 GAD_ASSUME_NONNULL_BEGIN
@@ -18,6 +19,7 @@ GAD_ASSUME_NONNULL_BEGIN
 /// the GADAdChoicesView. By default, AdChoices is placed in the top right corner of
 /// GADNativeAppInstallAdView and GADNativeContentAdView.
 @interface GADAdChoicesView : UIView
+
 @end
 
 GAD_ASSUME_NONNULL_END

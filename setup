@@ -6,6 +6,8 @@ cd "$CUR_DIR"
 if [ ! -d ../sdkbox-cocos2d-x-binary ]; then
     cd "$CUR_DIR/.."
     git clone --depth 1 https://github.com/sdkbox/sdkbox-cocos2d-x-binary.git
+    cd sdkbox-cocos2d-x-binary
+    unzip -o prebuilt/ios/Archive.zip -d prebuilt/ios/
 fi
 
 echo ""

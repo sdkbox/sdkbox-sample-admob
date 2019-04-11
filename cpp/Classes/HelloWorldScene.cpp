@@ -24,6 +24,12 @@ public:
     }
     virtual void adViewDidFailToReceiveAdWithError(const std::string &name, const std::string &msg) {
         if (showText) showText(StringUtils::format("%s\nname=%s,\nmsg=%s", __FUNCTION__, name.c_str(), msg.c_str()));
+        
+        float delay = 6; // seconds
+        cocos2d::Director::getInstance()->getScheduler()->schedule([name](float) {
+            cocos2d::log("cache %s again", name.c_str());
+            sdkbox::PluginAdMob::cache(name);
+        }, this, 0, 0, delay, false, "once");
     }
     virtual void adViewWillPresentScreen(const std::string &name) {
         if (showText) showText(StringUtils::format("%s name=%s", __FUNCTION__, name.c_str()));
@@ -33,12 +39,6 @@ public:
     }
     virtual void adViewWillDismissScreen(const std::string &name) {
         if (showText) showText(StringUtils::format("%s name=%s", __FUNCTION__, name.c_str()));
-
-        if (name == "gameover") {
-            sdkbox::PluginAdMob::cache(kGameOverAd);
-        } else if (name == kRewardedAd) {
-            sdkbox::PluginAdMob::cache(kRewardedAd);
-        }
     }
     virtual void adViewWillLeaveApplication(const std::string &name) {
         if (showText) showText(StringUtils::format("%s name=%s", __FUNCTION__, name.c_str()));
